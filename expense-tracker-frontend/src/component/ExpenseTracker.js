@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchAPI } from "../util/apiUtils";
 import CategorySelect from "./ExpenseTracker_component/CategorySelect";
 import ExpenseChart from "./ExpenseTracker_component/ExpenseChart";
+import BudgetSection from "./ExpenseTracker_component/BudgetSection";
 import { useNavigate } from "react-router-dom";
 
 function ExpenseTracker() {
@@ -93,6 +94,7 @@ function ExpenseTracker() {
   return (
     <div>
       <h2>Expense Tracker</h2>
+      <BudgetSection />
 
       <div className="container">
         <h4>Your Balance</h4>

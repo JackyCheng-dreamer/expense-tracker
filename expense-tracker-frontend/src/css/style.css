@@ -167,6 +167,9 @@ select {
   color: #e74c3c;
 }
 
+.good-msg {
+  color: #2ecc71;
+}
 .list li:hover .delete-btn {
   opacity: 1;
 }
