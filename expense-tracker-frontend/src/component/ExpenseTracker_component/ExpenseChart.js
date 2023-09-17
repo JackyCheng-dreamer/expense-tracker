@@ -23,7 +23,6 @@ function ExpenseChart({ transactions }) {
   }, [incomeChartInstance, expenseChartInstance]);
 
   transactions.forEach((transaction) => {
-    console.log(transaction);
     const category = transaction.category;
     const amount = transaction.amount;
     if (amount > 0) {

@@ -2,15 +2,16 @@
 
 const BASE_URL = "http://localhost:8080/api/";
 
-export const fetchAPI = async (endpoint, method = "GET", body = null) => {
+export const fetchAPI = async (endpoint, method = "GET", body = null, headers=true) => {
   const config = {
     method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
     credentials: "include", // send cookies with cross-origin requests
   };
-
+  if (headers) {
+    config.headers = {
+      "Content-Type": "application/json",
+    }
+  }
   if (body) {
     config.body = JSON.stringify(body);
   }
