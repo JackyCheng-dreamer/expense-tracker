@@ -2,20 +2,30 @@ import React, { useState, useEffect } from "react";
 import { fetchAPI } from "../../util/apiUtils";
 
 function BudgetSection() {
-  const [month, setMonth] = useState('01');
+  const [month, setMonth] = useState("01");
   const [budget, setBudget] = useState(0);
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [currentMonthBudget, setCurrentMonthBudget] = useState(0);
 
   useEffect(() => {
-    
+    fetchAPI("getCurrentMonthBudget.php")
+      .then((data) => {
+        if (data.status === "success") {
+          setCurrentMonthBudget(data.budget);
+        } else {
+          // Handle error, maybe set an error state or alert the user
+          console.error(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
   }, []);
 
-
   const getMonthList = () => {
-    return Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
-  }
+    return Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+  };
 
   const handleSumbit = async () => {
     try {
@@ -29,7 +39,7 @@ function BudgetSection() {
       console.error("Error:", error);
       setErrorMessage("Failed to set up our budget. Please try again.");
     }
-  }
+  };
 
   return (
     <div>
@@ -41,17 +51,27 @@ function BudgetSection() {
       <label>
         Select Month:
         <select value={month} onChange={(e) => setMonth(e.target.value)}>
-          {getMonthList().map((val) => <option key={val} value={val}>{val}</option>)}
+          {getMonthList().map((val) => (
+            <option key={val} value={val}>
+              {val}
+            </option>
+          ))}
         </select>
       </label>
       <label>
         Set our Budget:
-        <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)}/>
+        <input
+          type="number"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+        />
       </label>
 
       <button onClick={handleSumbit}>Update Buget!</button>
       {message && !errorMessage && <div className="good-msg">{message}</div>}
-      {errorMessage && message && <div className="error-msg">{errorMessage}</div>}
+      {errorMessage && message && (
+        <div className="error-msg">{errorMessage}</div>
+      )}
     </div>
   );
 }

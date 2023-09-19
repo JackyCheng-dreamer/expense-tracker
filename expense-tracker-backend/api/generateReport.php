@@ -40,7 +40,7 @@ $budget = file_get_contents($monthBudgetFile);
 $incomes = [];
 $expenses = [];
 
-foreach($expenses_data as $expense) {
+foreach ($expenses_data as $expense) {
     if ($expense['amount'] > 0)
         $incomes[] = $expense;
     else
@@ -61,7 +61,7 @@ $pdf->Ln();
 $pdf->Cell(40, 10, "Income records:");
 $pdf->Ln();
 $totalIncome = 0;
-foreach($incomes as $record) {
+foreach ($incomes as $record) {
     $totalIncome += $record['amount'];
     $formattedExpenses = "Category: " . $record['category'] . " ; Name: " .  $record['text'] . " ; Amount: " .  $record['amount'];
     $pdf->Cell(60, 10, $formattedExpenses);
@@ -73,7 +73,7 @@ $pdf->Ln();
 $totalExpense = 0;
 $pdf->Cell(40, 10, "Expense records:");
 $pdf->Ln();
-foreach($expenses as $record) {
+foreach ($expenses as $record) {
     $totalExpense += $record['amount'];
     $formattedExpenses = "Category: " . $record['category'] . " ; Name: " .  $record['text'] . " ; Amount: " .  $record['amount'];
     $pdf->Cell(60, 10, $formattedExpenses);
@@ -84,7 +84,7 @@ $pdf->Ln();
 
 // calculate teh bduget deficit
 $totalBudget = floatval($budget);
-$remaining = $totalBudget - $totalExpense;
+$remaining = $totalBudget + $totalExpense;
 
 if ($remaining >= 0)
     $pdf->Cell(40, 10, "User is within the budget with a balance of $$remaining .");
@@ -95,5 +95,4 @@ $filename = "$userName-$month-ExpenseTrackerReport.pdf";
 header('Content-Type: application/pdf');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
 
-$pdf->Output('D',$filename);
-
+$pdf->Output('D', $filename);

@@ -75,29 +75,24 @@ function ExpenseTracker() {
 
   const generateReport = () => {
     fetchAPI("generateReport.php", "GET", null, false)
-    .then(data => {
-      if (!data.ok || data.status === "error") {
-        setErrorMessage("An error occurred while generating a report. Please ensure you have setup the budge");
-        throw new Error("Error:", data.message || "Network error");
-      }
-      console.log("oh no idk why");
-      return data.blob();
-    })
-    .then(blob =>{
-      console.log("hi");
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = 'report.pdf';
-      document.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-    })
-    .catch (error => {
-      setErrorMessage("An error occurred while generating a report.");
-      console.error("Error:", error);
-    });
+      .then((data) => {
+        if (data instanceof Blob) {
+          const url = window.URL.createObjectURL(data);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = "ExpenseTrackerReport.pdf";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        } else if (data.status === "error") {
+          throw new Error(data.message || "Network error");
+        }
+      })
+      .catch((error) => {
+        setErrorMessage("An error occurred while generating a report.");
+        console.error("Error:", error);
+      });
   };
 
   return (

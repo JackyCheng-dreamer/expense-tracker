@@ -1,7 +1,6 @@
 import { Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
-import { Chart, ArcElement, PieController } from "chart.js";
-Chart.register(ArcElement, PieController);
+import "chart.js/auto";
 
 function ExpenseChart({ transactions }) {
   const incomeCategories = {};
@@ -74,17 +73,6 @@ function ExpenseChart({ transactions }) {
     plugins: {
       legend: {
         display: true,
-        position: "bottom", // You can change this to 'top', 'right', or 'left' as you see fit
-      },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem, data) {
-            let label = data.labels[tooltipItem.index];
-            let value =
-              data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-            return `${label}: ${value}`;
-          },
-        },
       },
     },
   };
