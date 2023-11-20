@@ -52,6 +52,6 @@ $newAccountData = "{$account};{$hashedPassword};{$username}\n";
 file_put_contents('../data/accounts.txt', $newAccountData, FILE_APPEND);
 
 $_SESSION['username'] = $username;
-$_SESSION['userfolder'] = "../data/users/{$directoryPath}";
+$_SESSION['userfolder'] = $directoryPath;
 
 echo json_encode(['status' => 'success', 'message' => 'Registration successful!']);
